@@ -10,7 +10,7 @@ namespace midAssignment.Services
 {
     public interface IUserService
     {
-        public User AddUser(User user);
+        public bool AddUser(User user);
         public User DeleteUser(int id);
         public bool GetUser(UserLoginModel user);
         public List<User> GetUsers();

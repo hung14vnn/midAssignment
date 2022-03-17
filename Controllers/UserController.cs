@@ -30,11 +30,9 @@ namespace midAssignment.Controllers
         [Route("login")]
         public ActionResult<bool> PostLogin(UserLoginModel user)
         {
-            Console.WriteLine("Hello");
             var res = _userService.GetUser(user);
-            if (res == null)
+            if (res == false)
             {
-        
                 return false;
             }
             else
@@ -45,7 +43,7 @@ namespace midAssignment.Controllers
         }
         [HttpPost]
         [Route("register")]
-        public ActionResult Post(User user)
+        public ActionResult<bool> Post(User user)
         {
             using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-E1B2MP8B\\SQLEXPRESS;Database=LibraryDb;User ID=sa;Password=123456;")) 
         {
@@ -56,17 +54,17 @@ namespace midAssignment.Controllers
             // create a command to check if the username exists
             using (SqlCommand cmd = new SqlCommand("select count(*) from [Users] where Username = @Username", con))
             {
-                cmd.Parameters.AddWithValue("UserName", user.Username);
+                cmd.Parameters.AddWithValue("Username", user.Username);
                 exists = (int)cmd.ExecuteScalar() > 0;
             }
 
             // if exists, show a message error
             if (exists)
-                return new JsonResult("Username already exists");
+                return false;
             else
             {
                 _userService.AddUser(user);
-                return new JsonResult(user);
+                return true;
             }
         }
         

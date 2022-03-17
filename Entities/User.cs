@@ -17,9 +17,10 @@ namespace midAssignment.Entities
         public string? Username { get; set; }
         [Required]
         public string? Password { get; set; }
-        [Required]
         [DefaultValue(false)]
         public Boolean? isAdministrator { get; set; }
+        [DefaultValue(null)]
+        public virtual ICollection<BookBorrowingRequest>? BookBorrowingRequests { get; set; }
     
 
     }

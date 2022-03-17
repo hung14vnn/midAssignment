@@ -15,11 +15,11 @@ namespace midAssignment.Services
         {
             _context = context;
         }
-        public User AddUser(User user)
+        public bool AddUser(User user)
         {
             _context.Users.Add(user);
             _context.SaveChanges();
-            return user;
+            return true;
         }
 
         public User DeleteUser(int id)
@@ -39,8 +39,7 @@ namespace midAssignment.Services
          
                   var check = _context.Users.Where(s => s.Username == user.Username && s.Password == user.Password).FirstOrDefault();
                   if (check != null)
-                
-                      return true;
+                    return true;
                  else
                     return false;
                 

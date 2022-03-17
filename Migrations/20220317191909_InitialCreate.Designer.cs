@@ -12,7 +12,7 @@ using midAssignment.Entities;
 namespace midAssignment.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20220317092631_InitialCreate")]
+    [Migration("20220317191909_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,9 +32,6 @@ namespace midAssignment.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int?>("BookID")
-                        .HasColumnType("int");
-
                     b.Property<string>("BookName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -47,8 +44,6 @@ namespace midAssignment.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("BookID");
 
                     b.HasIndex("CategoryID");
 
@@ -70,6 +65,8 @@ namespace midAssignment.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BookID");
 
                     b.HasIndex("UserID");
 
@@ -128,7 +125,6 @@ namespace midAssignment.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<bool?>("isAdministrator")
-                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.HasKey("Id");
@@ -138,10 +134,6 @@ namespace midAssignment.Migrations
 
             modelBuilder.Entity("midAssignment.Entities.Book", b =>
                 {
-                    b.HasOne("midAssignment.Entities.BookBorrowingRequest", null)
-                        .WithMany("Books")
-                        .HasForeignKey("BookID");
-
                     b.HasOne("midAssignment.Entities.Category", "Categories")
                         .WithMany("Books")
                         .HasForeignKey("CategoryID")
@@ -153,13 +145,19 @@ namespace midAssignment.Migrations
 
             modelBuilder.Entity("midAssignment.Entities.BookBorrowingRequest", b =>
                 {
-                    b.HasOne("midAssignment.Entities.User", "Users")
+                    b.HasOne("midAssignment.Entities.Book", "Books")
                         .WithMany()
+                        .HasForeignKey("BookID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("midAssignment.Entities.User", null)
+                        .WithMany("BookBorrowingRequests")
                         .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Users");
+                    b.Navigation("Books");
                 });
 
             modelBuilder.Entity("midAssignment.Entities.BookeBorrowingRequestDetails", b =>
@@ -173,14 +171,14 @@ namespace midAssignment.Migrations
                     b.Navigation("BookBorrowingRequests");
                 });
 
-            modelBuilder.Entity("midAssignment.Entities.BookBorrowingRequest", b =>
+            modelBuilder.Entity("midAssignment.Entities.Category", b =>
                 {
                     b.Navigation("Books");
                 });
 
-            modelBuilder.Entity("midAssignment.Entities.Category", b =>
+            modelBuilder.Entity("midAssignment.Entities.User", b =>
                 {
-                    b.Navigation("Books");
+                    b.Navigation("BookBorrowingRequests");
                 });
 #pragma warning restore 612, 618
         }

@@ -17,11 +17,10 @@ namespace midAssignment.Entities
         [Required]
         public int UserID {get; set; }
         [ForeignKey("UserID")]
-        public virtual User? Users { get; set; }
         [Required]
         public int BookID {get; set; }
         [ForeignKey("BookID")]
-        public virtual ICollection<Book>? Books { get; set; }
+        public virtual Book? Books { get; set; }
 
     
     }

@@ -17,16 +17,14 @@ namespace midAssignment.Entities
             modelBuilder.Entity<Book>()
                 .HasOne(p => p.Categories)
                 .WithMany(c => c.Books)
-                .HasForeignKey(p => p.CategoryID);
-                
-                
+                .HasForeignKey(p => p.CategoryID);         
         }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Category> Categories { get; set; }
-        public DbSet<Book> Books { get; set; }
-        public DbSet<BookBorrowingRequest> BookBorrowingRequests { get; set; }
-        public DbSet<BookeBorrowingRequestDetails> BookeBorrowingRequestDetails { get; set; }
+        public DbSet<User>? Users { get; set; }
+        public DbSet<Category>? Categories { get; set; }
+        public DbSet<Book>? Books { get; set; }
+        public DbSet<BookBorrowingRequest>? BookBorrowingRequests { get; set; }
+        public DbSet<BookeBorrowingRequestDetails>? BookeBorrowingRequestDetails { get; set; }
 
     }
 }

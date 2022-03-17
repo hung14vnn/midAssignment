@@ -15,7 +15,7 @@ namespace midAssignment.Entities
         public int Id{get; set; }
         [Required]
         public string? BookName { get; set; }
-         [Required]
+        [Required]
         public string? PhotoFileName { get; set; }
         [Required]
         public int CategoryID {get; set; }
