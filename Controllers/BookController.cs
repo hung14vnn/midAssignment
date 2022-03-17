@@ -4,6 +4,8 @@ using midAssignment.Services;
 using midAssignment.Entities;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace midAssignment.Controllers;
 
@@ -15,11 +17,13 @@ public class BookController : ControllerBase
     private readonly ILogger<BookController> _logger;
     private readonly IWebHostEnvironment _env;
     private readonly IBookService _bookService;
+    private readonly IUserService _userService;
 
-    public BookController(ILogger<BookController> logger, IBookService bookService, IWebHostEnvironment env)
+    public BookController(ILogger<BookController> logger, IBookService bookService, IUserService userService,IWebHostEnvironment env)
     {
         _logger = logger;
         _bookService = bookService;
+        _userService = userService;
         _env = env;
     }
    
@@ -28,18 +32,7 @@ public class BookController : ControllerBase
     public IActionResult Get()
     {
         var books =  _bookService.GetBooks();
-        var res = from book in books
-                    select new BookViewModel
-                    {
-                        Id = book.Id,
-                        BookName = book.BookName,
-                        CategoryID = book.CategoryID,
-                        Categories = new Category {
-                          Id= _bookService.GetCategory(book.CategoryID).Id,
-                          Name = _bookService.GetCategory(book.CategoryID).Name
-                        }
-                    };
-        return new JsonResult(res);
+        return new JsonResult(books);
     }
     // [HttpPost]
     // public IActionResult Post(ProductCreateModel product)
@@ -104,4 +97,6 @@ public class BookController : ControllerBase
                 return new JsonResult("notfound.png");
             }
         }
+        
+    
 }

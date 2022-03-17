@@ -1,26 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
+using midAssignment.Entities;
 
-namespace midAssignment.Entities
+namespace midAssignment.Models
 {
- public class User
+    public class UserLoginModel
     {
-        [Key]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int Id{get; set; }
         [Required]
         public string? Username { get; set; }
         [Required]
         public string? Password { get; set; }
-        [Required]
-        [DefaultValue(false)]
-        public Boolean? isAdministrator { get; set; }
-    
-
     }
+    
+  
 }

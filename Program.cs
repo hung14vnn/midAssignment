@@ -10,15 +10,18 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 builder.Services.AddScoped<IBookService,BookService>();
+builder.Services.AddScoped<IUserService,UserService>();
 builder.Services.AddDbContext<LibraryContext>(options =>
     options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddCors((options) =>
             {
-                options.AddPolicy("My Apllication", (builder) =>
+                options.AddPolicy("midAssignment", (builder) =>
                 {
-                    builder.WithOrigins("https://localhost:7281")
+                    builder.WithOrigins("http://localhost:3000")
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
                     .AllowCredentials();
                 });
             });
@@ -34,10 +37,12 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("midAssignment");
 
 app.UseAuthorization();
 
 app.MapControllers();
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(

@@ -12,7 +12,7 @@ using midAssignment.Entities;
 namespace midAssignment.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20220316063900_InitialCreate")]
+    [Migration("20220317092631_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
