@@ -12,7 +12,9 @@ namespace midAssignment.Services
     {
         public bool AddUser(User user);
         public User DeleteUser(int id);
-        public bool GetUser(UserLoginModel user);
+        public bool GetUser(User user);
+        public User GetUserForRequest(User user);
+        public int GetUserId(string username);
         public List<User> GetUsers();
         public User UpdateUser(User user);
     }

@@ -28,11 +28,13 @@ namespace midAssignment.Controllers
     }
         [HttpPost]
         [Route("login")]
-        public ActionResult<bool> PostLogin(UserLoginModel user)
+        public ActionResult<bool> PostLogin(User user)
         {
+
             var res = _userService.GetUser(user);
             if (res == false)
             {
+        
                 return false;
             }
             else
@@ -67,6 +69,7 @@ namespace midAssignment.Controllers
                 return true;
             }
         }
+      
         
         //create a string MD5
         // public static string GetMD5(string str)
@@ -83,6 +86,12 @@ namespace midAssignment.Controllers
         //     }
         //     return byte2String;
         // }
-    }
+    }   
+        [HttpGet]
+        public IActionResult GetUserId(string username)
+        {
+            var res = _userService.GetUserId(username);
+            return new JsonResult(res);
+        }
     }
 }

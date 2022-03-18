@@ -17,6 +17,7 @@ namespace midAssignment.Services
         }
         public bool AddUser(User user)
         {
+            user.isAdministrator = false;
             _context.Users.Add(user);
             _context.SaveChanges();
             return true;
@@ -34,7 +35,7 @@ namespace midAssignment.Services
             return user;
         }
 
-        public bool GetUser(UserLoginModel user)
+        public bool GetUser(User user)
         {
          
                   var check = _context.Users.Where(s => s.Username == user.Username && s.Password == user.Password).FirstOrDefault();
@@ -42,15 +43,22 @@ namespace midAssignment.Services
                     return true;
                  else
                     return false;
-                
 
-
+        }
+         public User GetUserForRequest(User user)
+        {
+            return _context.Users.Find(user.Id);
         }
 
         public List<User> GetUsers()
         {
             return _context.Users.ToList();
         }
+        public int GetUserId(string username)
+        {
+            return _context.Users.Where(s => s.Username == username).FirstOrDefault().Id;
+        }
+
 
         public User UpdateUser(User user)
         {

@@ -12,8 +12,8 @@ using midAssignment.Entities;
 namespace midAssignment.Migrations
 {
     [DbContext(typeof(LibraryContext))]
-    [Migration("20220317191909_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220318101349_Create")]
+    partial class Create
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -60,6 +60,12 @@ namespace midAssignment.Migrations
 
                     b.Property<int>("BookID")
                         .HasColumnType("int");
+
+                    b.Property<DateTime?>("RequestDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Status")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("UserID")
                         .HasColumnType("int");
