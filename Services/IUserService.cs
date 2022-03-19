@@ -15,7 +15,10 @@ namespace midAssignment.Services
         public bool GetUser(User user);
         public User GetUserForRequest(User user);
         public int GetUserId(string username);
+        public bool GetUserPermission(string username);
         public List<User> GetUsers();
         public User UpdateUser(User user);
+        public User GetUserById(int id);
+        
     }
 }

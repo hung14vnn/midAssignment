@@ -58,13 +58,31 @@ namespace midAssignment.Services
         {
             return _context.Users.Where(s => s.Username == username).FirstOrDefault().Id;
         }
+        public bool GetUserPermission (string username)
+        {
+            if (_context.Users.Where(s => s.Username == username).FirstOrDefault().isAdministrator == true)
+                return true;
+            else
+                return false;
+        }
 
 
         public User UpdateUser(User user)
         {
-            _context.Entry(user).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
+            var userToUpdate = _context.Users.Find(user.Id);
+            if (userToUpdate == null)
+            {
+                return null;
+            }
+            userToUpdate.Username = user.Username;
+            userToUpdate.Password = user.Password;
+            userToUpdate.isAdministrator = user.isAdministrator;
             _context.SaveChanges();
-            return user;
+            return userToUpdate;
+        }
+        public User GetUserById(int id)
+        {
+            return _context.Users.Find(id);
         }
     
     }

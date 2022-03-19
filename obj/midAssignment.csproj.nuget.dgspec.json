@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "d:\\Work\\source\\midAssignment\\midAssignment.csproj": {}
+    "D:\\Work\\source\\midAssignment\\midAssignment.csproj": {}
   },
   "projects": {
-    "d:\\Work\\source\\midAssignment\\midAssignment.csproj": {
+    "D:\\Work\\source\\midAssignment\\midAssignment.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "d:\\Work\\source\\midAssignment\\midAssignment.csproj",
+        "projectUniqueName": "D:\\Work\\source\\midAssignment\\midAssignment.csproj",
         "projectName": "midAssignment",
-        "projectPath": "d:\\Work\\source\\midAssignment\\midAssignment.csproj",
+        "projectPath": "D:\\Work\\source\\midAssignment\\midAssignment.csproj",
         "packagesPath": "C:\\Users\\OMEN 2020\\.nuget\\packages\\",
-        "outputPath": "d:\\Work\\source\\midAssignment\\obj\\",
+        "outputPath": "D:\\Work\\source\\midAssignment\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "D:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -26,6 +26,26 @@ namespace midAssignment.Controllers
         _userService = userService;
         _env = env;
     }
+        [HttpGet]
+        [Route("GetUsers")]
+        public IActionResult Get()
+        {
+            var users =  _userService.GetUsers();
+            return new JsonResult(users);
+        }
+        [HttpDelete]
+        [Route("DeleteUser")]
+        public ActionResult<User> DeleteUser(int id)
+        {
+            return _userService.DeleteUser(id);
+        }
+        [HttpPost]
+        [Route("UpdateUser")]
+        public ActionResult<User> UpdateUser(User user)
+        {
+            return _userService.UpdateUser(user);
+        }
+
         [HttpPost]
         [Route("login")]
         public ActionResult<bool> PostLogin(User user)
@@ -34,7 +54,6 @@ namespace midAssignment.Controllers
             var res = _userService.GetUser(user);
             if (res == false)
             {
-        
                 return false;
             }
             else
@@ -88,9 +107,31 @@ namespace midAssignment.Controllers
         // }
     }   
         [HttpGet]
+        [Route("getUserId")]
         public IActionResult GetUserId(string username)
         {
             var res = _userService.GetUserId(username);
+            return new JsonResult(res);
+        }
+        [HttpGet]
+        [Route("getUserPermission")]
+        public ActionResult<bool> GetUserPermission(string username)
+        {
+            var res = _userService.GetUserPermission(username);
+            if (res == false)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+        [HttpGet]
+        [Route("getUserById")]
+        public ActionResult<User> GetUserById(int id)
+        {
+            var res = _userService.GetUserById(id);
             return new JsonResult(res);
         }
     }

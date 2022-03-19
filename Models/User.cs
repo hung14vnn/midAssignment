@@ -8,12 +8,10 @@ using midAssignment.Entities;
 
 namespace midAssignment.Models
 {
-    public class UserLoginModel
+    public class UserUpdateModel
     {
         [Required]
-        public string? Username { get; set; }
-        [Required]
-        public string? Password { get; set; }
+        public bool isAdministrator { get; set; }
     }
     
   
