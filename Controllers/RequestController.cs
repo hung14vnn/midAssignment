@@ -34,11 +34,29 @@ namespace midAssignment.Controllers
         {
             return _requestService.GetRequestsByID(id);
         }
+        [HttpGet]
+        [Route("getRequests")]
+        public ActionResult<List<BookBorrowingRequest>> GetRequests()
+        {
+            return _requestService.GetRequests();
+        }
         [HttpDelete]
         [Route("deleteRequest")]
         public ActionResult<BookBorrowingRequest> DeleteRequest(int id)
         {
             return _requestService.DeleteRequest(id);
+        }
+        [HttpGet]
+        [Route("getRequestById")]
+        public ActionResult<BookBorrowingRequest> GetRequestById(int id)
+        {
+            return _requestService.GetRequestByID(id);
+        }
+        [HttpPost]
+        [Route("updateRequest")]
+        public ActionResult<BookBorrowingRequest> UpdateRequest(BookBorrowingRequest request)
+        {
+            return _requestService.UpdateRequest(request);
         }
         [HttpPost]
         public ActionResult<bool> Post(BookBorrowingRequest request)

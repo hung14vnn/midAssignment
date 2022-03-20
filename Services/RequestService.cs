@@ -23,6 +23,10 @@ namespace midAssignment.Services
             _context.SaveChanges();
             return true;
         }
+        public List<BookBorrowingRequest> GetRequests()
+        {
+            return _context.BookBorrowingRequests.ToList();
+        }
         public List<BookBorrowingRequest> GetRequestsByID(int id)
         {
             return _context.BookBorrowingRequests.Where(s => s.UserID == id).ToList();
@@ -37,6 +41,21 @@ namespace midAssignment.Services
             _context.BookBorrowingRequests.Remove(request);
             _context.SaveChanges();
             return request;
+        }
+        public BookBorrowingRequest GetRequestByID(int id)
+        {
+            return _context.BookBorrowingRequests.Find(id);
+        }
+        public BookBorrowingRequest UpdateRequest(BookBorrowingRequest request)
+        {
+           var requestToUpdate = _context.BookBorrowingRequests.Find(request.Id);
+            if (requestToUpdate == null)
+            {
+                return null;
+            }
+            requestToUpdate.Status = request.Status;
+            _context.SaveChanges();
+            return requestToUpdate;
         }
     }
        

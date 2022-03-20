@@ -11,11 +11,11 @@ namespace midAssignment.Services
     {
         public List<Book> GetBooks();
         public Book GetBook(int id);
-        public Category GetCategory(int id);
+        public Category GetCategory(int id);   
+        public bool AddBook(Book book);
+        public Book DeleteBook(int id);
+        public Book GetBookByID(int id);
+        public Book UpdateBook(Book book);
 
-        
-        // public Product AddProduct(Product product);
-        // public Product UpdateProduct(Product product );
-        // public Product DeleteProduct(int id);
     }
 }

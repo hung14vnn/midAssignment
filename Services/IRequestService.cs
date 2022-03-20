@@ -10,7 +10,12 @@ namespace midAssignment.Services
     public interface IRequestService
     {
         public bool AddRequest(BookBorrowingRequest request);
+        public List<BookBorrowingRequest> GetRequests();
         public List<BookBorrowingRequest> GetRequestsByID(int id);
         public BookBorrowingRequest DeleteRequest(int id);
+        public BookBorrowingRequest GetRequestByID(int id);
+        public BookBorrowingRequest UpdateRequest(BookBorrowingRequest request);
+        
+
     }
 }

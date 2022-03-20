@@ -6,6 +6,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using System.Text;
 using System.Security.Cryptography;
+using Microsoft.Data.SqlClient;
 
 namespace midAssignment.Controllers;
 
@@ -18,12 +19,14 @@ public class BookController : ControllerBase
     private readonly IWebHostEnvironment _env;
     private readonly IBookService _bookService;
     private readonly IUserService _userService;
+    private readonly ICategoryService _categoryService;
 
-    public BookController(ILogger<BookController> logger, IBookService bookService, IUserService userService,IWebHostEnvironment env)
+    public BookController(ILogger<BookController> logger, IBookService bookService, IUserService userService, ICategoryService categoryService ,IWebHostEnvironment env)
     {
         _logger = logger;
         _bookService = bookService;
         _userService = userService;
+        _categoryService = categoryService;
         _env = env;
     }
    
@@ -34,18 +37,33 @@ public class BookController : ControllerBase
         var books =  _bookService.GetBooks();
         return new JsonResult(books);
     }
-    // [HttpPost]
-    // public IActionResult Post(ProductCreateModel product)
-    // {
-    //     var res = new Product
-    //     {
-    //         Name = product.Name,
-    //         Manufacturer = product.Manufacturer,
-    //         CategoryID = product.CategoryID
-    //     };
-    //     _productService.AddProduct(res);
-    //     return Ok(res);
-    // }
+    [HttpPost]
+    public ActionResult<bool> Post(Book book)
+    {
+        
+        using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-E1B2MP8B\\SQLEXPRESS;Database=LibraryDb;User ID=sa;Password=123456;"))
+        {
+            con.Open();
+
+            bool exists = false;
+
+            // create a command to check if the username exists
+            using (SqlCommand cmd = new SqlCommand("select count(*) from [Books] where Id = @Id", con))
+            {
+                cmd.Parameters.AddWithValue("Id", book.Id);
+                exists = (int)cmd.ExecuteScalar() > 0;
+            }
+
+            // if exists, show a message error
+            if (exists)
+                return false;
+            else
+            {
+                _bookService.AddBook(book);
+                return true;
+            }
+        }
+    }
     // [HttpPut("{id}")]
     // public IActionResult Put(ProductCreateModel product, int id)
     // {
@@ -58,14 +76,12 @@ public class BookController : ControllerBase
     //     _productService.UpdateProduct(res);
     //     return Ok(res);
     // }
-    // [HttpDelete("{id}")]
-    // public IActionResult Delete(int id)
-    // {
-    //     if (id == null)
-    //         throw new ArgumentNullException("Id is not null here!");
-    //     _productService.DeleteProduct(id);
-    //     return Ok();
-    // }
+    [HttpDelete]
+    [Route("DeleteBook")]
+        public ActionResult<Book> DeleteBook(int id)
+        {
+            return _bookService.DeleteBook(id);
+        }
     [HttpGet("{id}")]
     public IActionResult Get(int id)
     {
@@ -74,6 +90,21 @@ public class BookController : ControllerBase
         var res = _bookService.GetBook(id);
         return new JsonResult(res);
     }
+    [HttpGet]
+    [Route("GetBooksById")]
+    public IActionResult GetBooksById(int id)
+    {
+        var books = _bookService.GetBookByID(id);
+        return new JsonResult(books);
+    }
+    [HttpPost]
+    [Route("UpdateBook")]
+    public ActionResult<Book> UpdateBook(Book book)
+    {
+        return _bookService.UpdateBook(book);
+    }
+
+
     [Route("SaveFile")]
     [HttpPost]
         public JsonResult SaveFile()

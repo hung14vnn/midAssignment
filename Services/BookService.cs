@@ -14,25 +14,25 @@ namespace midAssignment.Services
         {
             _context = context;
         }
-        // public book Addbook(Book book)
-        // {
-        //     _context.books.Add(book);
-        //     _context.SaveChanges();
-        //     return book;
-        // }
+        public bool AddBook(Book book)
+        {
+            _context.Books.Add(book);
+            _context.SaveChanges();
+            return true;
+        }
     
 
-        // public book Deletebook(int id)
-        // {
-        //     var book = _context.books.Find(id);
-        //     if (book == null)
-        //     {
-        //         return null;
-        //     }
-        //     _context.books.Remove(book);
-        //     _context.SaveChanges();
-        //     return book;
-        // }
+        public Book DeleteBook(int id)
+        {
+            var book = _context.Books.Find(id);
+            if (book == null)
+            {
+                return null;
+            }
+            _context.Books.Remove(book);
+            _context.SaveChanges();
+            return book;
+        }
 
         public Book GetBook(int id)
         {   
@@ -47,13 +47,26 @@ namespace midAssignment.Services
         {
             return _context.Books.ToList();
         }
+        public Book GetBookByID(int id)
+        {
+            return _context.Books.Find(id);
+        }
         
 
-        // public book Updatebook(book book)
-        // {   
-        //     _context.Entry(book).State = Microsoft.EntityFrameworkCore.EntityState.Modified;
-        //     _context.SaveChanges();
-        //     return book;
-        // }
+        public Book UpdateBook(Book book)
+        {   
+            var bookToUpdate = _context.Books.Find(book.Id);
+            if (bookToUpdate == null)
+            {
+                return null;
+            }
+            bookToUpdate.BookName = book.BookName;
+            bookToUpdate.CategoryID = book.CategoryID;  
+            bookToUpdate.PhotoFileName = book.PhotoFileName;
+            bookToUpdate.Categories = book.Categories;
+            _context.SaveChanges();
+            return bookToUpdate;
+            
+        }
     }
 }
