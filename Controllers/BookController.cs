@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using System.Text;
 using System.Security.Cryptography;
 using Microsoft.Data.SqlClient;
+using Microsoft.Net.Http.Headers;
 
 namespace midAssignment.Controllers;
 
@@ -43,39 +44,12 @@ public class BookController : ControllerBase
         
         using (SqlConnection con = new SqlConnection("Data Source=LAPTOP-E1B2MP8B\\SQLEXPRESS;Database=LibraryDb;User ID=sa;Password=123456;"))
         {
-            con.Open();
-
-            bool exists = false;
-
-            // create a command to check if the username exists
-            using (SqlCommand cmd = new SqlCommand("select count(*) from [Books] where Id = @Id", con))
-            {
-                cmd.Parameters.AddWithValue("Id", book.Id);
-                exists = (int)cmd.ExecuteScalar() > 0;
-            }
-
-            // if exists, show a message error
-            if (exists)
-                return false;
-            else
-            {
+            
                 _bookService.AddBook(book);
                 return true;
-            }
         }
     }
-    // [HttpPut("{id}")]
-    // public IActionResult Put(ProductCreateModel product, int id)
-    // {
-    //     var res = new Product
-    //     {   Id = id,
-    //         Name = product.Name,
-    //         Manufacturer = product.Manufacturer,
-    //         CategoryID = product.CategoryID
-    //     };
-    //     _productService.UpdateProduct(res);
-    //     return Ok(res);
-    // }
+  
     [HttpDelete]
     [Route("DeleteBook")]
         public ActionResult<Book> DeleteBook(int id)
@@ -112,16 +86,16 @@ public class BookController : ControllerBase
             try
             {
                 var httpRequest = Request.Form;
-                var postedFile = httpRequest.Files[0];
-                string filename = postedFile.FileName;
-                var physicalPath = _env.ContentRootPath + "/Photos" + filename;
-
-                using (var stream = new FileStream(physicalPath, FileMode.Create))
+                var file= httpRequest.Files[0];
+                string filename= file.FileName;
+                var path = _env.ContentRootPath + "/Photos/" + filename;
+                using (var stream = new FileStream(path, FileMode.Create))
                 {
-                    postedFile.CopyTo(stream);
+                    file.CopyTo(stream);
                 }
                 return new JsonResult(filename);
             }
+        
             catch (System.Exception)
             {
                 
